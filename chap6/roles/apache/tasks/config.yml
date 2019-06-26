@@ -1,0 +1,11 @@
+---
+# tasks file for apache
+  - name: copy apache config files
+    copy: 
+      src: httpd.conf
+      dest: /etc/httpd.conf
+      owner: root
+      group: root
+      mode: 0644
+
+    notify: restart apache service  

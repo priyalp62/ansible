@@ -1,0 +1,33 @@
+---
+   - name: deploy static website
+     hosts: lb
+     become: true
+     gather_facts: no
+     tasks:
+       - name: add yum repos
+         yum_repository:
+             name: epel
+             description: EPEL YUM repo
+             baseurl: https://nginx.org/packages/centos/6/x86_64
+             gpgcheck: no
+
+       - name: install nginx
+         package:
+           name: nginx
+           state: present
+             
+
+       - name: start nginx
+         service:
+           name: nginx
+           state: started
+
+       - name: install git
+         package:
+           name: git
+           state: present
+
+       - name: deploy on git
+         git:
+           repo: 'http://github.com/schoolofdevops/html-sample-app.git'
+           dest: /usr/share/nginx/html/appclae
